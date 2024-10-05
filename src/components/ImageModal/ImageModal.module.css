@@ -1,0 +1,23 @@
+/* .overlay {
+  background-color: black;
+  width: 100vh;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+} */
+.modal {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+.image {
+  width: auto;
+  height: 90vh;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 auto;
+}
+.loader {
+  margin: 0 auto;
+}

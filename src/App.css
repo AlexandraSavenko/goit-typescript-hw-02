@@ -1,0 +1,16 @@
+#root {
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+ul,
+li {
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+}
+img {
+  object-fit: cover;
+  display: block;
+  margin-bottom: 8px;
+}

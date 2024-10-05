@@ -1,0 +1,8 @@
+.button {
+  background-color: rgba(69, 69, 240, 0.795);
+}
+.button:hover,
+.button:focus {
+  border: none;
+  outline: none;
+}
