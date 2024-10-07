@@ -10,18 +10,41 @@ import ImageModal from "./components/ImageModal/ImageModal";
 import Modal from "react-modal";
 import { Toaster } from "react-hot-toast";
 
+interface DataType {
+  total: number;
+  total_pages: number;
+  results: IPhotoData[];
+}
+export interface IPhotoData {
+  id: string;
+  description: string | null;
+  alt_description: string | null;
+  urls: {
+    regular: string;
+    small: string;
+  };
+  likes: number;
+}
+
+interface IBigPicture {
+  src: string;
+  likes: number;
+  altDescription: string | null;
+  description: string | null;
+}
+
 Modal.setAppElement("#root");
 
 function App() {
-  const [text, setText] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState(false);
-  const [topic, setTopic] = useState("");
-  const [page, setPage] = useState(1);
-  const [modal, setModal] = useState(false);
-  const [bigpicture, setBigpicture] = useState(null);
+  const [text, setText] = useState<IPhotoData[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [err, setErr] = useState<boolean>(false);
+  const [topic, setTopic] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [modal, setModal] = useState<boolean>(false);
+  const [bigpicture, setBigpicture] = useState<IBigPicture | null>(null);
 
-  const handleTopicSubmit = (newTopic) => {
+  const handleTopicSubmit = (newTopic: string) => {
     setTopic(newTopic);
     setPage(1);
     setText([]);
@@ -30,11 +53,11 @@ function App() {
     if (!topic) {
       return;
     }
-    const fetchData = async () => {
+    const fetchData = async (imgForSearch: string, page: number) => {
       try {
         setLoading(true);
         setErr(false);
-        const fetchedPhotos = await fetchPhoto(topic, page);
+        const fetchedPhotos = await fetchPhoto<DataType>(imgForSearch, page);
         setText((prevText) =>
           page === 1 ? fetchedPhotos : [...prevText, ...fetchedPhotos]
         );
@@ -45,14 +68,14 @@ function App() {
         setLoading(false);
       }
     };
-    fetchData();
+    fetchData(topic, page);
   }, [page, topic]);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const handleModal = (picture) => {
+  const handleModal = (picture: IBigPicture) => {
     setBigpicture(picture);
     setModal(true);
   };
@@ -60,6 +83,7 @@ function App() {
   const ModalClose = () => {
     setModal(false);
   };
+
   return (
     <div>
       <SearchBar onSubmit={handleTopicSubmit} value={topic} />
