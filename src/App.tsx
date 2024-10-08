@@ -10,20 +10,29 @@ import ImageModal from "./components/ImageModal/ImageModal";
 import Modal from "react-modal";
 import { Toaster } from "react-hot-toast";
 
-interface DataType {
-  total: number;
-  total_pages: number;
-  results: IPhotoData[];
-}
-export interface IPhotoData {
+// interface DataType {
+//   total: number;
+//   total_pages: number;
+//   results: IPhotoData[];
+// }
+// export interface IPhotoData {
+//   id: string;
+//   description: string | null;
+//   alt_description: string | null;
+//   urls: {
+//     regular: string;
+//     small: string;
+//   };
+//   likes: number;
+// }
+
+interface IPhotoData {
   id: string;
-  description: string | null;
-  alt_description: string | null;
-  urls: {
-    regular: string;
-    small: string;
-  };
-  likes: number;
+  slug: string;
+  alternative_slugs: Record<string, any>; // Adjust the type if you know the structure of `alternative_slugs`
+  created_at: string;
+  updated_at: string;
+  // Add other properties here as needed
 }
 
 interface IBigPicture {
@@ -53,11 +62,12 @@ function App() {
     if (!topic) {
       return;
     }
-    const fetchData = async (imgForSearch: string, page: number) => {
+    const fetchData = async (topic: string, page: number) => {
       try {
         setLoading(true);
         setErr(false);
-        const fetchedPhotos = await fetchPhoto<DataType>(imgForSearch, page);
+        const fetchedPhotos = await fetchPhoto<IPhotoData>(topic, page);
+
         setText((prevText) =>
           page === 1 ? fetchedPhotos : [...prevText, ...fetchedPhotos]
         );
