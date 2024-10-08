@@ -1,4 +1,4 @@
-export default function ErrorMessage() {
+export default function ErrorMessage(): JSX.Element {
   return (
     <div>
       <p>Sorry! Something went wrong😟! Please try again!</p>

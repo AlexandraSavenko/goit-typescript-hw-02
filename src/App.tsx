@@ -37,7 +37,6 @@ interface IPhotoData {
 
 interface IBigPicture {
   src: string;
-  likes: number;
   altDescription: string | null;
   description: string | null;
 }
@@ -67,9 +66,17 @@ function App() {
         setLoading(true);
         setErr(false);
         const fetchedPhotos = await fetchPhoto<IPhotoData>(topic, page);
+        console.log(fetchedPhotos);
 
-        setText((prevText) =>
-          page === 1 ? fetchedPhotos : [...prevText, ...fetchedPhotos]
+        setText((prevText): IPhotoData[] =>
+          page === 1
+            ? Array.isArray(fetchedPhotos)
+              ? fetchedPhotos
+              : []
+            : [
+                ...prevText,
+                ...(Array.isArray(fetchedPhotos) ? fetchedPhotos : []),
+              ]
         );
       } catch (error) {
         setErr(true);

@@ -1,11 +1,14 @@
 import { BsSearch } from "react-icons/bs";
 import css from "./SearchBar.module.css";
 import toast from "react-hot-toast";
+import { FormEvent } from "react";
 
 export default function SearchBar({ onSubmit }) {
-  const handleInputSubmit = (event) => {
+  const handleInputSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const query = event.target.elements.searchword.value.trim();
+
+    const query: string = event.target.elements.searchword.value.trim();
+
     if (!query) {
       toast.error("Write your query, please!", {
         duration: 4000,
