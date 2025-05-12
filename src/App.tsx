@@ -66,7 +66,6 @@ function App() {
         setLoading(true);
         setErr(false);
         const fetchedPhotos = await fetchPhoto<IPhotoData>(topic, page);
-        console.log(fetchedPhotos);
 
         setText((prevText): IPhotoData[] =>
           page === 1
@@ -103,7 +102,7 @@ function App() {
 
   return (
     <div>
-      <SearchBar onSubmit={handleTopicSubmit} value={topic} />
+      <SearchBar onSubmit={handleTopicSubmit} />
       <Toaster />
       <ImageGallery resultsArr={text} onModalOpen={handleModal} />
       {loading && <Loader />}

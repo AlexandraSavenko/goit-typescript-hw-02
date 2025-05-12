@@ -3,10 +3,14 @@ import css from "./SearchBar.module.css";
 import toast from "react-hot-toast";
 import { FormEvent } from "react";
 
-export default function SearchBar({ onSubmit }) {
+interface Props {
+  onSubmit: (newTopic: string) => void;
+}
+
+export default function SearchBar({ onSubmit }:Props) {
   const handleInputSubmit = (event: FormEvent) => {
     event.preventDefault();
-
+    console.dir(event.target)
     const query: string = event.target.elements.searchword.value.trim();
 
     if (!query) {
