@@ -1,6 +1,14 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
-export default function ImageGallery({ resultsArr, onModalOpen }) {
+import { IPhotoData } from '../../App'
+
+interface Props {
+resultsArr: IPhotoData[];
+onModalOpen: (picture: IPhotoData) => void
+}
+
+export default function ImageGallery({ resultsArr, onModalOpen }: Props) {
+  console.log(resultsArr)
   return (
     <ul className={css.list}>
       {resultsArr.map((image) => (

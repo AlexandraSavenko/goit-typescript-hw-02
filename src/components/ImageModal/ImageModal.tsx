@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function ImageModal({ isOpen, onClose, modalData }:Props) {
-  console.log(modalData)
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.code === "Escape" && isOpen) {

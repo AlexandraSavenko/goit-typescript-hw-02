@@ -1,5 +1,12 @@
+import { IPhotoData } from "../../App";
 import css from "./ImageCard.module.css";
-export default function ImageCard({ picture, onModalOpen }) {
+
+interface Props {
+picture: IPhotoData;
+onModalOpen: (picture: IPhotoData) => void;
+}
+
+export default function ImageCard({ picture, onModalOpen }:Props) {
   return (
     <div onClick={() => onModalOpen(picture)}>
       <img

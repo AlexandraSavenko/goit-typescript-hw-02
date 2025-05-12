@@ -11,11 +11,16 @@ import Modal from "react-modal";
 import { Toaster } from "react-hot-toast";
 
 
-interface IPhotoData {
+export interface IPhotoData {
+    alt_description: string| undefined;
+
   id: string;
   slug: string;
   created_at: string;
   updated_at: string;
+  urls: {regular: string | undefined;
+    small: string | undefined;
+  }
   // Add other properties here as needed
 }
 
@@ -24,7 +29,9 @@ export interface IBigPicture {
   altDescription: string | null;
   alt_description: string| undefined;
   description: string | null;
-  urls: {regular: string | undefined}
+  urls: {regular: string | undefined;
+    small: string | undefined;
+  }
 }
 
 Modal.setAppElement("#root");
@@ -39,7 +46,6 @@ function App() {
   const [modal, setModal] = useState<boolean>(false);
   const [bigpicture, setBigpicture] = useState<IBigPicture | null>(null);
 
-  console.log(text)
   const handleTopicSubmit = () => {
     setTopic(query);
     setPage(1);
@@ -85,7 +91,7 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   };
 
-  const handleModal = (picture: IBigPicture) => {
+  const handleModal = (picture: IPhotoData) => {
     setBigpicture(picture);
     setModal(true);
   };
