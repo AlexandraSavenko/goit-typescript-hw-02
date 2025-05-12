@@ -2,10 +2,18 @@ import { useEffect } from "react";
 import ReactModal from "react-modal";
 import Loader from "../Loader/Loader";
 import css from "./ImageModal.module.css";
-// import "./ImageModal.css";
-export default function ImageModal({ isOpen, onClose, modalData }) {
+import { IBigPicture } from "../../App";
+
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  modalData: IBigPicture | null;
+}
+
+export default function ImageModal({ isOpen, onClose, modalData }:Props) {
+  console.log(modalData)
   useEffect(() => {
-    const handleEsc = (event) => {
+    const handleEsc = (event: KeyboardEvent) => {
       if (event.code === "Escape" && isOpen) {
         onClose();
       }
@@ -51,7 +59,7 @@ export default function ImageModal({ isOpen, onClose, modalData }) {
           <img
             className={css.image}
             src={modalData && modalData.urls.regular}
-            alt={modalData && modalData.urls.alt_description}
+            alt={modalData && modalData.alt_description}
           />
         ) : (
           <Loader />

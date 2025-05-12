@@ -10,40 +10,27 @@ import ImageModal from "./components/ImageModal/ImageModal";
 import Modal from "react-modal";
 import { Toaster } from "react-hot-toast";
 
-// interface DataType {
-//   total: number;
-//   total_pages: number;
-//   results: IPhotoData[];
-// }
-// export interface IPhotoData {
-//   id: string;
-//   description: string | null;
-//   alt_description: string | null;
-//   urls: {
-//     regular: string;
-//     small: string;
-//   };
-//   likes: number;
-// }
 
 interface IPhotoData {
   id: string;
   slug: string;
-  alternative_slugs: Record<string, any>; // Adjust the type if you know the structure of `alternative_slugs`
   created_at: string;
   updated_at: string;
   // Add other properties here as needed
 }
 
-interface IBigPicture {
+export interface IBigPicture {
   src: string;
   altDescription: string | null;
+  alt_description: string| undefined;
   description: string | null;
+  urls: {regular: string | undefined}
 }
 
 Modal.setAppElement("#root");
 
 function App() {
+    const [query, setQuery] = useState('')
   const [text, setText] = useState<IPhotoData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [err, setErr] = useState<boolean>(false);
@@ -52,11 +39,13 @@ function App() {
   const [modal, setModal] = useState<boolean>(false);
   const [bigpicture, setBigpicture] = useState<IBigPicture | null>(null);
 
-  const handleTopicSubmit = (newTopic: string) => {
-    setTopic(newTopic);
+  console.log(text)
+  const handleTopicSubmit = () => {
+    setTopic(query);
     setPage(1);
     setText([]);
   };
+
   useEffect(() => {
     if (!topic) {
       return;
@@ -77,10 +66,15 @@ function App() {
                 ...(Array.isArray(fetchedPhotos) ? fetchedPhotos : []),
               ]
         );
-      } catch (error) {
-        setErr(true);
-        setLoading(false);
-      } finally {
+      } catch (err) {
+  if (err instanceof Error) {
+    console.log(err.message);
+  } else {
+    console.log("Unknown error", err);
+  }
+  setErr(true);
+  setLoading(false)
+} finally {
         setLoading(false);
       }
     };
@@ -102,7 +96,7 @@ function App() {
 
   return (
     <div>
-      <SearchBar onSubmit={handleTopicSubmit} />
+      <SearchBar query={query} setQuery={setQuery} handleSubmit={handleTopicSubmit} />
       <Toaster />
       <ImageGallery resultsArr={text} onModalOpen={handleModal} />
       {loading && <Loader />}
