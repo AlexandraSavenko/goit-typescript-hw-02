@@ -13,26 +13,17 @@ import { Toaster } from "react-hot-toast";
 
 export interface IPhotoData {
     alt_description: string| undefined;
-
   id: string;
   slug: string;
   created_at: string;
   updated_at: string;
-  urls: {regular: string | undefined;
-    small: string | undefined;
-  }
-  // Add other properties here as needed
-}
-
-export interface IBigPicture {
-  src: string;
-  altDescription: string | null;
-  alt_description: string| undefined;
   description: string | null;
   urls: {regular: string | undefined;
     small: string | undefined;
   }
 }
+
+
 
 Modal.setAppElement("#root");
 
@@ -44,7 +35,7 @@ function App() {
   const [topic, setTopic] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [modal, setModal] = useState<boolean>(false);
-  const [bigpicture, setBigpicture] = useState<IBigPicture | null>(null);
+  const [bigpicture, setBigpicture] = useState<IPhotoData | null>(null);
 
   const handleTopicSubmit = () => {
     setTopic(query);
@@ -92,6 +83,7 @@ function App() {
   };
 
   const handleModal = (picture: IPhotoData) => {
+    console.log(picture)
     setBigpicture(picture);
     setModal(true);
   };

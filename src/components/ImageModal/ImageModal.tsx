@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import ReactModal from "react-modal";
 import Loader from "../Loader/Loader";
 import css from "./ImageModal.module.css";
-import { IBigPicture } from "../../App";
+import { IPhotoData } from "../../App";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  modalData: IBigPicture | null;
+  modalData: IPhotoData | null;
 }
 
 export default function ImageModal({ isOpen, onClose, modalData }:Props) {
